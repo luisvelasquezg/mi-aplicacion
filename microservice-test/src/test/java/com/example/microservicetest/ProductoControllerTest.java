@@ -64,7 +64,7 @@ class ProductoControllerTest {
         when(productoService.obtenerPorId(1L)).thenReturn(Optional.empty());
 
         mockMvc.perform(get("/api/productos/1"))
-                .andExpect(status().isOk())
+                .andExpect(status().isNotFound())
                 .andExpect(content().string(""));
     }
 
@@ -74,7 +74,7 @@ class ProductoControllerTest {
 
         mockMvc.perform(post("/api/productos")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{"id":1,"nombre":"Laptop","precio":1200.00}"))
+                        .content("{\"id\":1,\"nombre\":\"Laptop\",\"precio\":1200.00}"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(producto.getId()));
     }
@@ -85,7 +85,9 @@ class ProductoControllerTest {
 
         mockMvc.perform(put("/api/productos/1")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{"id":1,"nombre":"Laptop","precio":1200.00}"))
+                        .content("{\"id\":1,\"nombre\":\"Laptop\",\"precio\":1200.00}"))
+
+
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(producto.getId()));
     }

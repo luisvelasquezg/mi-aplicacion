@@ -3,6 +3,7 @@ package com.example.microservicetest.controller;
 import com.example.microservicetest.model.Producto;
 import com.example.microservicetest.service.ProductoService;
 import io.swagger.v3.oas.annotations.Operation;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,8 +27,10 @@ public class ProductoController {
 
     @Operation(summary = "Obtener un producto por ID")
     @GetMapping("/{id}")
-    public Optional<Producto> obtenerPorId(@PathVariable Long id) {
-        return productoService.obtenerPorId(id);
+    public ResponseEntity<Producto> obtenerPorId(@PathVariable Long id) {
+        return productoService.obtenerPorId(id)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @Operation(summary = "Crear un nuevo producto")
