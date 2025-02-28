@@ -33,7 +33,8 @@ public class ProductoController {
     @Operation(summary = "Crear un nuevo producto")
     @PostMapping
     public Producto crearProducto(@RequestBody Producto producto) {
-        return productoService.guardar(producto);
+        Producto nuevoProducto = productoService.guardar(producto);
+        return productoService.guardar(nuevoProducto);
     }
 
     @Operation(summary = "Actualizar un producto existente")

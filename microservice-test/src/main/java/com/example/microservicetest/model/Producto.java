@@ -4,8 +4,9 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
+@Getter
+@Setter
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 public class Producto {
     @Id
@@ -14,4 +15,13 @@ public class Producto {
     private String nombre;
     private double precio;
     private int stock;
+
+    public Producto() {
+    }
+
+    public Producto(String nombre, double precio, int stock) {
+        this.nombre = nombre;
+        this.precio = precio;
+        this.stock = stock;
+    }
 }

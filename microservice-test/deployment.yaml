@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: microservicio-crud-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: microservicio-crud
+  template:
+    metadata:
+      labels:
+        app: microservicio-crud
+    spec:
+      containers:
+        - name: microservicio-crud
+          image: luisvelasquezg01/microservicio-crud:latest
+          ports:
+            - containerPort: 8080
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: microservicio-crud-service
+spec:
+  selector:
+    app: microservicio-crud
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  type: LoadBalancer
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: microservicio-crud-svc
+spec:
+  selector:
+    app: microservicio-crud
+  ports:
+    - protocol: TCP
+      port: 8083
+      targetPort: 8080
+  type: ClusterIP

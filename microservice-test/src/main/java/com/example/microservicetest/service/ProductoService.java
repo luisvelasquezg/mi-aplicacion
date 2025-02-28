@@ -9,25 +9,25 @@ import java.util.Optional;
 
 @Service
 public class ProductoService {
-    private final ProductoRepository repository;
+    private final ProductoRepository productoRepository;
 
     public ProductoService(ProductoRepository repository) {
-        this.repository = repository;
+        this.productoRepository = repository;
     }
 
     public List<Producto> listarTodos() {
-        return repository.findAll();
+        return productoRepository.findAll();
     }
 
     public Optional<Producto> obtenerPorId(Long id) {
-        return repository.findById(id);
+        return productoRepository.findById(id);
     }
 
     public Producto guardar(Producto producto) {
-        return repository.save(producto);
+        return productoRepository.save(producto);
     }
 
     public void eliminar(Long id) {
-        repository.deleteById(id);
+        productoRepository.deleteById(id);
     }
 }

@@ -1,0 +1,33 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Build') {
+            steps {
+                bat 'mvn clean package'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                bat 'docker build -t microservicio-crud:latest .'
+            }
+        }
+
+        stage('Push to Docker Hub') {
+            steps {
+                bat 'docker login -u luisvelasquezg01 -p Stealth-X35.'
+                bat 'docker tag microservicio-crud:latest luisvelasquezg01/microservicio-crud:latest'
+                bat 'docker push luisvelasquezg01/microservicio-crud:latest'
+            }
+        }
+
+        stage('Deploy with Minikube') {
+            steps {
+                withCredentials([file(credentialsId: 'mycubeconfig', variable: 'KUBECONFIG')]) {
+                    bat "kubectl apply -f deployment.yaml  --kubeconfig=${KUBECONFIG}"
+                }
+            }
+        }
+    }
+}
